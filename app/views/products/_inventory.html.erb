@@ -1,11 +1,19 @@
 <% if product.inventory_count? %>
-  <p><%= product.inventory_count %> in stock</p>
+  <p class="text-sm text-stone-600">
+    <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+    <span class="font-medium text-stone-800"><%= product.inventory_count %></span> in stock
+  </p>
 <% else %>
-  <p>Out of stock</p>
-  <p>Email me when available.</p>
+  <div class="space-y-3">
+    <p class="text-sm text-stone-600">
+      <span class="inline-block w-2 h-2 bg-stone-400 rounded-full mr-2"></span>
+      Out of stock
+    </p>
+    <p class="text-sm text-stone-500">Get notified when it's back:</p>
 
-  <%= form_with model: [product, Subscriber.new] do |form| %>
-    <%= form.email_field :email, placeholder: "you@example.com", required: true %>
-    <%= form.submit "Submit" %>
-  <% end %>
+    <%= form_with model: [product, Subscriber.new], class: "flex gap-2" do |form| %>
+      <%= form.email_field :email, placeholder: "you@example.com", required: true, class: "flex-1 px-4 py-2 bg-white border border-stone-300 rounded-lg text-sm focus:outline-none focus:border-[#D94F2B] focus:ring-1 focus:ring-[#D94F2B] transition" %>
+      <%= form.submit "Notify me", class: "bg-[#D94F2B] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#b8401f] transition cursor-pointer" %>
+    <% end %>
+  </div>
 <% end %>
