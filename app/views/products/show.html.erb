@@ -1,19 +1,31 @@
-<p><%= link_to "Back", products_path %></p>
+<div class="max-w-3xl mx-auto">
+  <%= link_to "← Back to products", products_path, class: "text-sm text-stone-500 hover:text-[#D94F2B] transition inline-block mb-8" %>
 
-<section class="product">
-  <%= image_tag @product.featured_image if @product.featured_image.attached? %>
-
-  <section class="product-info">
-    <% cache @product do %>
-      <h1><%= @product.name %></h1>
-      <%= @product.description %>
+  <section class="bg-white border border-stone-200 rounded-lg overflow-hidden">
+    <% if @product.featured_image.attached? %>
+      <%= image_tag @product.featured_image, class: "w-full h-80 object-cover" %>
     <% end %>
 
-    <%= render "inventory", product: @product %>
+    <div class="p-8">
+      <% cache @product do %>
+        <h1 class="text-4xl font-semibold tracking-tight mb-4" style="font-family: 'Cormorant Garamond', serif;">
+          <%= @product.name %>
+        </h1>
+        <div class="prose prose-stone text-stone-700 mb-6">
+          <%= @product.description %>
+        </div>
+      <% end %>
 
-    <% if authenticated? %>
-      <%= link_to "Edit", edit_product_path(@product) %>
-      <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
-    <% end %>
+      <div class="border-t border-stone-200 pt-6 mb-6">
+        <%= render "inventory", product: @product %>
+      </div>
+
+      <% if authenticated? %>
+        <div class="flex items-center gap-4 pt-4 border-t border-stone-200">
+          <%= link_to "Edit", edit_product_path(@product), class: "bg-[#D94F2B] text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-[#b8401f] transition" %>
+          <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-sm text-stone-500 hover:text-red-600 transition cursor-pointer" %>
+        </div>
+      <% end %>
+    </div>
   </section>
-</section>
+</div>
