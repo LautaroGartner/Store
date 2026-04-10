@@ -1,12 +1,23 @@
-<h1>Products</h1>
-<h1><%= t ".title" %></h1>
+<div class="flex items-center justify-between mb-10">
+  <h1 class="text-5xl font-semibold tracking-tight" style="font-family: 'Cormorant Garamond', serif;">
+    <%= t ".title", default: "Products" %>
+  </h1>
+  <% if authenticated? %>
+    <%= link_to "+ New product", new_product_path, class: "bg-[#D94F2B] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#b8401f] transition" %>
+  <% end %>
+</div>
 
-<%= link_to "New product", new_product_path if authenticated? %>
-
-<div id="products">
+<div id="products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   <% @products.each do |product| %>
-    <div>
-       <%= link_to product.name, product %>
-    </div>
+    <%= link_to product, class: "block bg-white border border-stone-200 rounded-lg p-6 hover:border-[#D94F2B]/50 hover:shadow-md transition" do %>
+      <h2 class="text-xl font-semibold mb-2" style="font-family: 'Cormorant Garamond', serif;">
+        <%= product.name %>
+      </h2>
+      <p class="text-sm text-stone-500">View details →</p>
+    <% end %>
+  <% end %>
+
+  <% if @products.empty? %>
+    <p class="text-stone-500 col-span-full text-center py-12">No products yet.</p>
   <% end %>
 </div>
